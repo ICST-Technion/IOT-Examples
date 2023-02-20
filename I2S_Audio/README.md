@@ -1,3 +1,8 @@
+I2S_audio_SPIFFS - play audio from WAV file uploaded to SPIFFS
+I2S_audio_SD -  play audio from WAV file in SD card
+SD_list_files - test code to verify your SD card is connected properly
+spiffs_test - test code to open an example file uploaded to the SPIFFS partition 
+
 NOTICE! THIS DIAGRAM ASSUMES YOUR SD CARD MODULE IS SOLDERED IN THE FOLLOWING WAY - 
 
 <img src="https://user-images.githubusercontent.com/3014352/220039859-e602d99e-b2a2-4222-b7fd-1033ac7130e9.jpg" width="400">
