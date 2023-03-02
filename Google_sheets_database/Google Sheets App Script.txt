@@ -1,0 +1,102 @@
+//   Based on code published by Martin Hawksey
+//   https://hawksey.info/blog/2014/07/google-sheets-as-a-database-insert-with-apps-script-using-postget-methods-with-ajax-example/
+
+
+// Usage
+//  1. Enter sheet name where data is to be written below
+var SHEET_NAME = "XXXXXXXXXXXXXXXXXXXXX";
+//  2. Run > setup
+//
+//  3. Publish > Deploy as web app 
+//    - enter Project Version name and click 'Save New Version' 
+//    - set security level and enable service (most likely execute as 'me' and access 'anyone, even anonymously) 
+//
+//  4. Copy the 'Current web app URL' and post this in your form/script action 
+//
+//  5. Insert column names on your destination sheet matching the parameter names of the data you are passing in (exactly matching case)
+
+var SCRIPT_PROP = PropertiesService.getScriptProperties(); // new property service
+
+function doGet(e) {
+    return handleResponse(e);
+}
+
+function doPost(e) {
+    return handleResponse(e);
+}
+
+function handleResponse(e) {
+    var lock = LockService.getPublicLock();
+    lock.waitLock(30000);  // wait 30 seconds before conceding defeat.
+
+    try {
+        // next set where we write the data - you could write to multiple/alternate destinations
+        var ss = SpreadsheetApp.getActiveSpreadsheet();
+        var sheet = ss.getSheets()[0];
+        var params_sheet = ss.getSheets()[1];
+        var cell;
+        // var readCell = "param5"; //FOR DEBUGGING
+        var readCell = e.parameter.readCell;
+        // Logger.log(readCell);
+        if (readCell !== undefined) { //handle read requests for single cells. in this example we are reading parameters from sheet 1
+            var param_headers = params_sheet.getRange(1, 1, params_sheet.getLastRow(), 1).getValues();//[0];
+            // Logger.log(param_headers);
+            for (i in param_headers) {
+                // Logger.log(i);
+                // Logger.log(param_headers[i]);
+                if (param_headers[i] == readCell) 
+                {
+                    var j=parseInt(i)+1; //for some reason i is a string and not an integer. 
+                    cell = params_sheet.getRange(j, 2);
+                    // Logger.log('found '+ readCell + ' value is ' +cell.getValue());
+                }
+            }
+            if (cell !== undefined) 
+            {
+                try {var cellValue = cell.getValue();}
+                catch (error) {return ContentService.createTextOutput(JSON.stringify({ "result": "error", "NoMatchingHeaderError": error }));
+            }
+
+            }
+            return ContentService
+                .createTextOutput(JSON.stringify({ "result": "success", "data": cellValue }));
+
+        }
+
+        else { //handle write requests for single row
+
+            var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+            var nextRow = sheet.getLastRow() + 1; // get next row
+            var row = [];
+            // loop through the header columns
+            for (i in headers) {
+                if (headers[i] == "Timestamp") { // special case if you include a 'Timestamp' column
+                    row.push(Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "MMM d yyyy HH:mm:ss"));
+                } else { // else use header name to get data
+                    row.push(e.parameter[headers[i]]);
+                }
+            }
+            // more efficient to set values as [][] array than individually
+            sheet.getRange(nextRow, 1, 1, row.length).setValues([row]);
+            // return json success results
+            return ContentService
+                .createTextOutput(JSON.stringify({ "result": "success", "row": nextRow }))
+                .setMimeType(ContentService.MimeType.JSON);
+        }
+
+    }
+
+    catch (e) {
+        // if error return this
+        return ContentService
+            .createTextOutput(JSON.stringify({ "result": "error", "error": e }))
+            .setMimeType(ContentService.MimeType.JSON);
+    } finally { //release lock
+        lock.releaseLock();
+    }
+
+}
+function setup() {
+    var doc = SpreadsheetApp.getActiveSpreadsheet();
+    SCRIPT_PROP.setProperty("key", doc.getId());
+}
