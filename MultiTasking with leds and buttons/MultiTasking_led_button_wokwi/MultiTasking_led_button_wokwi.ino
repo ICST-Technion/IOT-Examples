@@ -6,6 +6,10 @@
 // the code counts button presses but will ignore very short presses
 // you can also print out the length of last press or the current press duration.
 
+//************************************************************************************************
+//LIVE SIMULATOR WITH THIS CODE IS AVAILABLE AT - https://wokwi.com/projects/373921539051463681
+//************************************************************************************************
+
 #include <Adafruit_NeoPixel.h>
 
 #define PIN        26 //pin for neopixels
