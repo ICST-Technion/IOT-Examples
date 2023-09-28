@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "author": "Uri Shaked",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 118.53,
+      "left": -106.54,
+      "attrs": { "color": "green", "key": "1", "label": "button 0", "bounce": "1" }
+    },
+    { "type": "wokwi-neopixel", "id": "rgb1", "top": 48.36, "left": -84.48, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn3",
+      "top": 119.14,
+      "left": -205.58,
+      "attrs": { "color": "blue", "key": "2", "label": "button 1" }
+    },
+    { "type": "wokwi-neopixel", "id": "rgb2", "top": 48.95, "left": -179.15, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "esp:D26", "rgb1:DIN", "green", [ "v-1.03", "h-36.38", "v-48.11" ] ],
+    [ "rgb1:DOUT", "rgb2:DIN", "green", [ "h-41.94", "v-8.67" ] ],
+    [ "esp:GND.2", "rgb1:VSS", "black", [ "h-22.08", "v-40.01", "h-21.31", "v-46.63" ] ],
+    [ "btn3:1.r", "esp:D14", "blue", [ "h14.14", "v-17.2", "h129.44" ] ],
+    [ "esp:VIN", "rgb1:VDD", "red", [ "h-17.13", "v-111.77", "h-71.35" ] ],
+    [ "rgb2:VDD", "rgb1:VDD", "red", [ "h-13.16", "v-4.86", "h107.83" ] ],
+    [ "rgb2:VSS", "rgb1:VSS", "black", [ "h31.99", "v8.66", "h62.68" ] ],
+    [ "btn1:2.l", "btn3:2.r", "black", [ "h0" ] ],
+    [ "esp:GND.2", "btn1:2.r", "black", [ "h0" ] ],
+    [ "btn1:1.r", "esp:D13", "green", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
