@@ -1,0 +1,6 @@
+install DFRobot_BMI160 library version 1.0.0
+wire based on the based test wiring. 
+there are 2 tests - one for measuring steps and one for acceleraion. choose the relavent one and run.
+
+basic tutorial with step counter example:
+https://wiki.dfrobot.com/Gravity__BMI160_6-Axis_Inertial_Motion_Sensor_SKU__SEN0250

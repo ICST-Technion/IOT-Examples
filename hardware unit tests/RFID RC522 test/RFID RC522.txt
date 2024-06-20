@@ -1,0 +1,5 @@
+full tutorial: https://randomnerdtutorials.com/security-access-using-mfrc522-rfid-reader-with-arduino/
+
+install  MFRC522 library ver 1.4.11
+connect to arduino based on the pics and run the code.
+to check approximate card or chip.

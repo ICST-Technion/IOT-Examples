@@ -1,0 +1,7 @@
+connect based on the chart to ESP32
+run the code 
+check on serial plotter that you see something
+run on tone generator diffrent pitches and see that it changes
+
+
+tone generator: https://onlinetonegenerator.com/
