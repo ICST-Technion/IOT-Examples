@@ -1,0 +1,8 @@
+full tutorial: https://randomnerdtutorials.com/arduino-load-cell-hx711/
+
+connect, calibrate and use the actaul test
+
+install HX711 arduino library version 0.7.5, connect based to the wiring diargram.
+run the calibration test (force_sensor_test_calibration_1) - find an item you know the weight of, run the test and follow instruction.
+your calibration factor is reading/known.
+enter this param to the test file and run. (force_sensor_test_2)
