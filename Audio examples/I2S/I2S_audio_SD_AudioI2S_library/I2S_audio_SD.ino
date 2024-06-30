@@ -3,6 +3,9 @@
 //**********************************************************************************************************
 
 //#include "Arduino.h" //required for PlatformIO
+//run this after checking SD card is working with the SD example in the SD library
+// SD card should contain a file named "123_u8.wav" in the root folder
+// this example requires installation of the ESP32-audioI2S library
 
 #include "Audio.h"
 #include "SPI.h"
