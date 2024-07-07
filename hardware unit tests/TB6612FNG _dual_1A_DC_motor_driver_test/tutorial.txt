@@ -1,0 +1,6 @@
+theres a physical test in the driver's box for ESP
+
+full Arduino tutorial:https://www.phippselectronics.com/using-the-dual-dc-stepper-motor-drive-tb6612fng-with-arduino/
+full ESP32 tutorial : https://www.instructables.com/Simple-2-Wheel-ESP32-Robot-Using-the-TB6612FNG-Dua/
+
+connect based on the diagram. connect to 5V power source- in the picture you can see the lab power source but you can use any battery or others.
