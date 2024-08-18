@@ -18,15 +18,10 @@
 #include "Arduino.h"
 #include "WiFiMulti.h"
 #include "Audio.h"
-// #include "SPI.h"
-// #include "SD.h"
-// #include "FS.h"
+
 
 // Digital I/O used
-// #define SD_CS          5
-// #define SPI_MOSI      23
-// #define SPI_MISO      19
-// #define SPI_SCK       18
+
 #define I2S_DOUT      25
 #define I2S_BCLK      27
 #define I2S_LRC       26
@@ -38,11 +33,9 @@ String password = "arduino123";
 
 
 void setup() {
-    // pinMode(SD_CS, OUTPUT);      digitalWrite(SD_CS, HIGH);
-    // SPI.begin(SPI_SCK, SPI_MISO, SPI_MOSI);
-    // SPI.setFrequency(1000000);
+
     Serial.begin(115200);
-    // SD.begin(SD_CS);
+
     WiFi.mode(WIFI_STA);
     wifiMulti.addAP(ssid.c_str(), password.c_str());
     wifiMulti.run();
