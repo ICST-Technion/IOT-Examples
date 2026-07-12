@@ -18,12 +18,12 @@ int file_counter = 1;
 static byte set_volume_CMD = 0x31;
 static byte play_index_CMD = 0x41;
 static byte play_filename_CMD = 0x42;
-static int8_t select_SD_CMD[] = { 0x7e, 0x03, 0X35, 0x01, 0xef };
-static int8_t reset_CMD[] = { 0x7e, 0x03, 0X35, 0x05, 0xef };
+static uint8_t select_SD_CMD[] = { 0x7e, 0x03, 0X35, 0x01, 0xef };
+static uint8_t reset_CMD[] = { 0x7e, 0x03, 0X35, 0x05, 0xef };
 
 void setup() {
   // Initiate the serial monitor.
-  Serial.begin(9600);
+  Serial.begin(115200);
   // Initiate the Serial MP3 Player Module.
   MP3.begin(9600, SERIAL_8N1, 17, 16);
   delay(100);  //delay for stability
@@ -38,17 +38,18 @@ void setup() {
 
   select_SD_card();  //ALWAYS select SD card at beginning
   delay(1200);       //indexing the files on your SD card will take at least 1 second. let the operation finish in the background before trying to play a file.
-  set_volume(5);
+  set_volume(15);
   play_filename(1, 1);
 }
 
 void loop() {
 
   if (check_MP3_status() == STOPPED) {
-    play_filename(1, file_counter);
+    delay(25);
     file_counter++;
+    play_filename(1, file_counter);
     if (file_counter > 4) {
-      file_counter = 1;
+      file_counter = 0;
     }
   }
   delay(25);
@@ -72,7 +73,7 @@ MP3_status check_MP3_status() {
           return (STOPPED);
         } else {
           Serial.println(" 1");
-          return (PLAYING);
+          return (STOPPED);
         }
 
       } else if (receivedData[dataIndex - 1] == 0x00 && receivedData[dataIndex - 2] == 0x31) {  //7E20EF7E3101EF - status reply - currently playing
